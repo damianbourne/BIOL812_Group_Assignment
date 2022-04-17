@@ -1,0 +1,144 @@
+#Load and examine the data
+#----------------------------------------------------
+data<-read.csv("./Arena fight and venom usage.csv",header=T) #Load CSV file
+#----------------------------------------------------
+
+#Data.frame manipulation to make it more "user-friendly" by renaming the columns 
+#and then selecting the columns we want to keep below
+#----------------------------------------------------
+names(data)<-c("Date","Container","Replicate_No","Monomorium_species","Argentine_ant_density",
+               "Argentine_ant_Mortality_1h", "Argentine_ant_Mortality_4h", "Argentine_ant_Mortality_24h",
+               "Monomorium_Mortality_1h","Monomorium_Mortality_4h","Monomorium_Mortality_24h",
+               "Individual_Aggression_0","Individual_Aggression_1","Individual_Aggression_2",
+               "Individual_Aggression_3","Individual_Aggression_4","Maximum_Aggression_0", 
+               "Maximum_Aggression_1","Maximum_Aggression_2", "Maximum_Aggression_3",
+               "Maximum_Aggression_4","Venom_use_None","Venom_use_Gast","Venom_use_Sting",
+               "Individual_Aggression Rel_0", "Individual_Aggression_Rel_1",
+               "Individual_Aggression Rel_2","Individual_Aggression_Rel_3",
+               "Individual_Aggression Rel_4","Maximum_Aggression_Rel_0", 
+               "Maximum_Aggression Rel%_1","Maximum_Aggression_Rel_2",
+               "Maximum_Aggression Rel%_3","Maximum_Aggression_Rel_4",
+               "Venom_use_Rel_None","Venom_use_Rel_Gast","Venom_use_Rel_Sting",
+               "Combined_Rel_Maximum_interactions","Combined_Rel_Maximum_aggression")
+
+
+data=data[-1,] #Removal of an unused column 
+
+Venom_use_data<-data[,c("Replicate_No","Monomorium_species", #Selecting the columns to keep
+                            "Venom_use_None","Venom_use_Gast","Venom_use_Sting")]
+
+
+#Subset and select the species we want to individually examine
+#----------------------------------------------------
+M_sydneyense<-subset(Venom_use_data,Monomorium_species=="M. sydneyense")
+M_antipodum<-subset(Venom_use_data,Monomorium_species=="M. antipodum")
+M_antarcticum<-subset(Venom_use_data,Monomorium_species=="M. antarcticum")
+M_smithii<-subset(Venom_use_data,Monomorium_species=="M. smithii")
+#----------------------------------------------------
+
+#Six replicates were taken for each Monomorium species at different Argentine
+#ant densities (20,40,80,160). Depending on the ant density, different venom
+#utilization (None, Gast, Sting) occurred. A while loop can be used to cycle through
+#the row of data , sum the individual venom utilization in respect to Argentine ant
+#density and then store the results in a vector
+
+#The code below follows: 
+#1. Creation of empty storage vectors
+#2. While loop to cycle through the total(24 rows) of individual Monomorium species
+#   and then sum the six replicates of venom utilization at each individual ant density
+#3. Each cycle stores its results in the empty storage vectors created prior
+#----------------------------------------------------
+#Sydneyense
+O_M_sydneyense_Venom_use_None<-c()
+O_M_sydneyense_Venom_use_Gast<-c()
+O_M_sydneyense_Venom_use_Sting<-c()
+
+#Antipodum
+O_M_antipodum_Venom_use_None<-c() #Empty storage vectors
+O_M_antipodum_Venom_use_Gast<-c()
+O_M_antipodum_Venom_use_Sting<-c()
+
+#Antarticum
+O_M_antarcticum_Venom_use_None<-c()
+O_M_antarcticum_Venom_use_Gast<-c()
+O_M_antarcticum_Venom_use_Sting<-c()
+
+#Smithii
+O_M_smithii_Venom_use_None<-c()
+O_M_smithii_Venom_use_Gast<-c()
+O_M_smithii_Venom_use_Sting<-c()
+
+X<-24
+i<-1
+count<-6
+while (count<=X){
+  
+  #Sydneyense
+  M_sydneyense_Venom_use_None<-sum(as.numeric(M_sydneyense$Venom_use_None[i:count])) #Sum the results of a six replicate cycle
+  O_M_sydneyense_Venom_use_None<-c(O_M_sydneyense_Venom_use_None,M_sydneyense_Venom_use_None) #Then they are stored here
+  
+  M_sydneyense_Venom_use_Gast<-sum(as.numeric(M_sydneyense$Venom_use_Gast[i:count])) 
+  O_M_sydneyense_Venom_use_Gast<-c(O_M_sydneyense_Venom_use_Gast,M_sydneyense_Venom_use_Gast)
+  
+  M_sydneyense_Venom_use_Sting<-sum(as.numeric(M_sydneyense$Venom_use_Sting[i:count]))
+  O_M_sydneyense_Venom_use_Sting<-c(O_M_sydneyense_Venom_use_Sting,M_sydneyense_Venom_use_Sting)
+ 
+  #Antipodum
+  M_antipodum_Venom_use_None<-sum(as.numeric(M_antipodum$Venom_use_None[i:count]))
+  O_M_antipodum_Venom_use_None<-c(O_M_antipodum_Venom_use_None,M_antipodum_Venom_use_None)
+  
+  M_antipodum_Venom_use_Gast<-sum(as.numeric(M_antipodum$Venom_use_Gast[i:count])) 
+  O_M_antipodum_Venom_use_Gast<-c(O_M_antipodum_Venom_use_Gast,M_antipodum_Venom_use_Gast)
+  
+  M_antipodum_Venom_use_Sting<-sum(as.numeric(M_antipodum$Venom_use_Sting[i:count]))
+  O_M_antipodum_Venom_use_Sting<-c(O_M_antipodum_Venom_use_Sting,M_antipodum_Venom_use_Sting)
+
+  #Antarticum
+  M_antarcticum_Venom_use_None<-sum(as.numeric(M_antarcticum$Venom_use_None[i:count]))
+  O_M_antarcticum_Venom_use_None<-c(O_M_antarcticum_Venom_use_None,M_antarcticum_Venom_use_None)
+  
+  M_antarcticum_Venom_use_Gast<-sum(as.numeric(M_antarcticum$Venom_use_Gast[i:count]))
+  O_M_antarcticum_Venom_use_Gast<-c(O_M_antarcticum_Venom_use_Gast,M_antarcticum_Venom_use_Gast)
+  
+  M_antarcticum_Venom_use_Sting<-sum(as.numeric(M_antarcticum$Venom_use_Sting[i:count]))
+  O_M_antarcticum_Venom_use_Sting<-c(O_M_antarcticum_Venom_use_Sting,M_antarcticum_Venom_use_Sting)
+  
+  #Smithii
+  M_smithii_Venom_use_None<-sum(as.numeric(M_smithii$Venom_use_None[i:count]))
+  O_M_smithii_Venom_use_None<-c(O_M_smithii_Venom_use_None,M_smithii_Venom_use_None)
+  
+  M_smithii_Venom_use_Gast<-sum(as.numeric(M_smithii$Venom_use_Gast[i:count])) 
+  O_M_smithii_Venom_use_Gast<-c(O_M_smithii_Venom_use_Gast,M_smithii_Venom_use_Gast)
+  
+  M_smithii_Venom_use_Sting<-sum(as.numeric(M_smithii$Venom_use_Sting[i:count]))
+  O_M_smithii_Venom_use_Sting<-c(O_M_smithii_Venom_use_Sting,M_smithii_Venom_use_Sting)
+
+  i<-i+6
+  count<-count+6
+} #While loop to cycle through the 24 rows, looking at six replicates at a time
+#----------------------------------------------------
+
+#Store the results of the once empty vectors from above into a data.frame for 
+#each Monomorium species
+#----------------------------------------------------
+Sydneyense_Observed_Data<-data.frame(c(O_M_sydneyense_Venom_use_None),c(O_M_sydneyense_Venom_use_Gast),c(O_M_sydneyense_Venom_use_Sting))
+Antipodum_Observed_Data<-data.frame(c(O_M_antipodum_Venom_use_None),c(O_M_antipodum_Venom_use_Gast),c(O_M_antipodum_Venom_use_Sting))
+Antarcticum_Observed_Data<-data.frame(c(O_M_antarcticum_Venom_use_None), c(O_M_antarcticum_Venom_use_Gast), c(O_M_antarcticum_Venom_use_Sting))
+Smithii_Observed_Data<-data.frame(c(O_M_smithii_Venom_use_None),c(O_M_smithii_Venom_use_Gast),c(O_M_smithii_Venom_use_Sting))
+
+names(Sydneyense_Observed_Data)<-c("None","Gast","Sting") #Rename columns to simplify information
+names(Antipodum_Observed_Data)<-c("None","Gast","Sting")
+names(Antarcticum_Observed_Data)<-c("None","Gast","Sting")
+names(Smithii_Observed_Data)<-c("None","Gast","Sting")
+
+#----------------------------------------------------
+
+#Chi square test
+#----------------------------------------------------
+Argentine_ant_density<-c(20,40,80,160) # Argentine ant density to perform an independent chi-test 
+
+chisq.test(Sydneyense_Observed_Data,Antarcticum_Mortality)
+chisq.test(Antipodum_Observed_Data,Antarcticum_Mortality)
+chisq.test(Antarcticum_Observed_Data,Antarcticum_Mortality)
+chisq.test(Smithii_Observed_Data,Antarcticum_Mortality)
+#----------------------------------------------------
