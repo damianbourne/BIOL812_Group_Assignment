@@ -71,7 +71,7 @@ O_M_smithii_Venom_use_Sting<-c()
 X<-24
 i<-1
 count<-6
-while (count<=X){
+while (count<=X){ #While loop to cycle through the 24 rows, looking at six replicates at a time
   
   #Sydneyense
   M_sydneyense_Venom_use_None<-sum(as.numeric(M_sydneyense$Venom_use_None[i:count])) #Sum the results of a six replicate cycle
@@ -115,7 +115,7 @@ while (count<=X){
 
   i<-i+6
   count<-count+6
-} #While loop to cycle through the 24 rows, looking at six replicates at a time
+} 
 #----------------------------------------------------
 
 #Store the results of the once empty vectors from above into a data.frame for 
