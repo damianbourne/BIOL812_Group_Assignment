@@ -1,0 +1,61 @@
+---
+title: "README"
+author: "Damian Bourne, Mark Mckeown, Mary-Elizabeth Raymond"
+date: "13/04/2022"
+output: html_document
+---
+#Hypothesis 1
+**LD50 Calculations for each species**
+Using "Venom survivability.csv" to determine any differences between venom toxicity of the four Monomorium species and the LD50 values of their respective venoms. This data file shows the lethality of  Argentine ants treated with control and increasing concentrations of the respective specie's venom.
+
+Multifactor ANOVA is used to determine if effects of venom species and venom dose on lethality are statistically significant. 
+Next, filters by species and determines percent dead after 4HR and Dose concentration by species. These vectors are then used to conduct a regression and determine the equation of the regression line between Dose Concentration and Percent Dead for each species. The LD50 of the venom for each species is obtained by determining the venom dose for each species when 50% of the population is dead. This gives one value of LD50 for each species.
+
+Finally, autoplot() function is used for the linear model of each species to confirm that the key assumptions of a linear model are met.
+
+**Monomorium Survival**
+This code uses the "Arena fight and venom usage Monomorium Survival.csv" data file which compares the survival of the four Monomorium species across three timepoints when in arena fight with Argentine ants.
+
+Generalised linear model is first used to determine if the differences in total survival in Arena fights are statistically significant.
+Data is subset by species and custom function Survival_Function_Mon is used to determine the overall probability of surviving past each timepoint. These probabilities are converted into percentages and these values are plotted against time for each species in a linegraph.  
+
+**Argentine Survival**
+Uses the "Arena fight and venom usage Argentine Survival.csv" data file which compares the survival of the Argentine ants fighting four Monomorium species across three timepoints.
+Generalised linear model is first used to determine if the differences between species in total survival are statistically significant
+Data is subset by species and custom function Survival_Arg_Function is used to determine the overall probability of Argentine ants surviving past each time point when in arena fights against Monomorium species. These probabilities are converted into percentages and these values are plotted against time for each species in a linegraph. 
+
+#Hypothesis 2
+The second hypothesis states that the survival chances of the Monomorium species should differ depending on venom utilization (none, gast, sting). This can be determined using Pearson's chi-square tests.
+
+**Data.frame manipulation**
+In the “Arena fight and venom utilization.csv” file, the data was made more “user-friendly” by changing the name of the columns and then removing the unnecessary ones. Once the data was sorted, it was subsetted into the individual Monomorium species.
+
+**Pearson's chi-square tests**
+General approach:
+Six replicates were taken for each Monomorium species at different Argentine ant densities (20,40,80,160). Depending on the ant density, different venom utilization (none, gast, sting) occurred. A while loop can be used to cycle through the six replicates (4 cycles, 6 replicates each) , sum the individual venom utilization in respect to Argentine ant density and then store the results in three different vectors. This was done for each of the Monomorium species.
+
+While loop specifics:
+The while loop worked by examining six replicates at a time then moving onto the next set of six replicates (n=24). Every cycle, the venom utilization (none, gast, sting) was individually summed and then saved in a storage vector (1 storage vector per venom utilization type). Four Monomorium species each with three storage vectors that contained four values per venom utilization.
+
+
+Pearson's chi-square tests: Storage
+The three different storage vectors from above for each of the Monomorium species were stored into a respected data.frame with renamed columns(“None”, “Gast”,”Sting”).
+
+Pearson's chi-square tests: Execution
+An Argentine Ant Density vector (20,40,80,160) was created and then compared to each individual Monomorium data.frame using the chisq.test().
+
+#Hypothesis 3 and 4
+**Monomorium_Ant_Survival.R**
+The Monomorium_Ant_Survival.R file looks into the impacts of Monomorium species and Argentine ant density on Monomorium survival within arena fights. The code begins with data clean up and then goes on to summarize the survival of Monomorium species survival by species and Argentine ant density. The code then adds a column that converts the Boolean variable for survival into a proportion for that particular arena fight. This enables us to create the aesthetically pleasing and easy to understand graphs. The next section of code runs a generalized linear model on the data with the link function adjusted to binomial to account for the Boolean response variable. This linear model looks at the effects of species and Argentine ant density of Monomorium survival while also looking at the impacts the reaction between these predictor variables have. 
+
+**Argentine_Ant_Surival.R**
+The Argentine_Ant_Survival.R file looks into the impacts of Monomorium species and Argentine ant density of Argentine survival in the same arena fights. The code is extremely similar with the addition of parameters accounting for the different number of ants in each density trial for the proportion survival calculations. 
+
+
+
+
+
+
+
+
+
