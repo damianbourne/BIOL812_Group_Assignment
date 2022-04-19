@@ -1,0 +1,117 @@
+---
+title: "Final Report Army Ants"
+author: "Mary-Elizabeth Raymond, Mark McKeown, and Damian Bourne"
+date: "19/04/2022"
+output: html_document
+---
+![](Title.png)
+
+[Data Source](https://www.datadryad.org/stash/dataset/doi:10.5061%2Fdryad.7g02r)
+
+[Github repository](https://github.com/damianbourne/BIOL812_Group_Assignment)
+
+### Authorship Statement
+
+Mary-Elizabeth Raymond contributed by writhing hypothesis #1 code and hypothesis #1 report results and summary. They also contributed by managing the presentation as well as presenting the introduction/ hypothesis #1 portion of the presentation.  
+
+Mark McKeown contributed to writing the report (introduction,material, methods, data source and results/discussion on hypothesis #2) and the code for hypothesis #2. He also contributed to the presentation in regards to the material for hypothesis #2.
+
+Damian Bourne contributed to writing hypothesis 3 and 4 code and the corresponding results portion within the report. He also contributed to the consolidation of the final report in Rmarkdown, the README.rmd file, managing the github repository and presentation through the addition of slides regarding the aforementioned hypotheses. 
+
+# Introduction
+The *Argentine* ant is a global threat to biodiversity as an invasive species with established populations across six continents (Buczkowski & Wossler, 2019; Roura-Pascual et al., 2011). The success of this native South American insect largely comes from their extraordinary social organization and their ability to form unicoloniality or “super-colonies” whereby physically separated nests show no hostility towards one another (Giraud et al., 2002). Instead, the *Argentine* ants are aggressive towards ants and other types of insects outside the colony and the invasive *Argentine* ants will defend their territory against outsiders. The ecological dominance of the *Argentine* ant has been associated with population decline in a variety of susceptible organisms(Westermann et al., 2015).
+ 
+The *Monomorium* is one ant genus that has been successful at withstanding these invasive *Argentine* ant competitors by utilizing a wide range of venom alkaloids. Each venom-producing species of *Monomorium* differ in molecular chemistry and toxicities of their venom.(Jones et al., 2009) In particular, the native *Monomorium* species of New Zealand vary in their venom compositions depending on whether the ant genus co-exist or not with the *Argentine* ants (Westermann et al., 2015). The native *Monomorium* species of *M. antarcticum* (Smith) and *M. smithii* (Forel) share very few borders with the *Argentine* ants while the exotic species of *M. antipodum* (Forel) and *M. sydneyense* (Forel) co-exist with the *Argentine* ants (Westermann et al., 2015). Consequently, the native and exotic *Monomorium* species differ in their venom chemistry. *M. antarcticum* and *M. smithii* contain both pyrrolizidine and pyrrolidine alkaloid groups in their chemical structure while the *M. antipodum* and *M. sydneyense* contain only the pyrrolidine on 6, 7, 8 and 9 as seen in Figure 1 (Westermann et al., 2015). 
+
+![](Figure 1.png)
+
+Figure 1. The four *Monomorium* species and the respected structural formula of venom (Westermann et al., 2015)
+
+The venom chemistry of each of the four *Monomorium* groups may influence their distribution patterns of those species that co-exist with the *Argentine* ants.
+
+In this mechanistic study, we set out to understand the observed patterns of co-occurrence between the *Monomorium* and *Argentine* ants and determine the importance of venom as a chemical weapon. Our goal was to investigate whether venom toxicity, composition and deployment method affected patterns of co-existence. It is assumed that *M. antarcticum* and *M. smithii* excluded themselves from the *Argentine* ants through biotic resistance by venom application. Therefore, we hypothesised that: (1) *Monomorium* species with higher venom toxicity may increase survival rate when engaging with *Argentine* ants (2) The survival chances of the *Monomorium* species should differ depending on venom utilization (none, gast, sting) (3) Different *Monomorium* species are better adapted to withstand and survive against the invasive *Argentine* species at different densities  (4) *Argentine* ant survival is dependent on *Argentine* ant density in which *Monomorium* species is present. 
+
+# Materials and Methods
+## Ant samples
+All four *Monomorium* species were collected across North Island in New Zealand, and it follows: *M. antarcticum* (Ohariu Bay), *M. antipodum* (Palmerston North), *M. smithii* (Ohariu Bay) and *M. sydneyense* (Sulfur Point), as well as the *Argentine* ant L. humile (Petone). The individual ant colonies were housed in nest boxes at a constant temperature of 20˚C and maintained a standard day/night cycle of 12/12hrs. The walls of the nest boxes were lined with Fluon (Dupont Teflon). The ant diet consisted of 20% honey water and two mealworms three times a week.
+
+## Data source
+### Arena Fight and Venom Utilization
+The “Arena fight and venom usage.csv” corresponds to fighting experiments between the *Monomorium* and *Argentine* ant species. Twelve worker ants of one of the four species (M. antipodem, *M. sydneyense*, *M. antarcticum* and *M. smithii*) were placed in a small container with 20, 40, 80 or 160 *Argentine* ants. Six replicates were collected for each combination of the four *Monomorium* species and four *Argentine* ant densities. Venom usage by the *Monomorium* ants were observed to be the absolute number of occurrences of venom usage which was noted as gaster/spraying, stinging, or no venom.
+
+### Arena Fight and Venom Usage *Monomorium* Survival
+The “Arena fight and venom usage *Monomorium* Survival.csv” represents the *Monomorium* mortality from the “Arena fight and venom usage” table. The Species was the type of *Monomorium* ant used in the experiment. *Argentine* ant density is the population of *Argentine* ant workers used in the replicate and Status of the individual *Monomorium* ant worker was given a score (0=Alive; 1=Dead) after the given time which is noted as the Survival Time.
+
+### Venom Toxicity
+Venom survival experiments were conducted using gas chromatography-mass spectrometry (GC-MS) analysis with electron impact (EI) mode. The major alkaloids of the four ant species were identified by direct comparison with previously collected synthetic samples. Concentrations of 1, 5, 10, 15 and 20 µg/µL of each of the respected venoms in ethanol was utilized as well as pure solvent as a control. *Argentine* ant workers were randomly chosen from a container and placed in a glass vial. The ants were anaesthetized with ether vapour for 10 seconds and then sealed in the vial for 50 seconds. Twenty anaesthetized ants were placed in a Petri dish and individually treated with 1µL of venom solution. Ants were placed in a separate plastic container to recover from anaesthesia with the status of each animal assessed after 4 hours of treatment. Ants were scored as dead if they were immobile and alive if movement could be observed.
+
+/nextpage{-}
+
+# Results and Discussion
+## Hypothesis #1
+### Calculating lethal dose (LD50) for each species 
+A multifactor ANOVA was first used to conclude that mortality varied significantly with respect to venom dose (p < 0.005) and species (p < 0.005). Furthermore, this analysis showed that differences in mortality with respect to dose and species yielded significant results between the two pairings of co-occurring and not co-occurring species. Namely, not co-occurring *M. antarcticum* varied significantly from co-occurring *M. antipodum* (p = 0.003) and *M. sydneyense* (p = 0.015) but did not vary significantly from its not co-occurring partner *M. smithii* (p = 0.7570).  Next, the venom survivability data was subset by species and the proportion dead after 4 hours was calculated. A linear regression was done to determine the equation for the line of best fit between dose concentration (ug/uL) and proportion dead for each species. TheLD50 for each *Monomorium* species was determined by calculating the dose concentration that would yield 50% mortality for the *Argentine* test subjects (Table 1). Interestingly low toxicity species were not co-occurring species with *Argentine* ants while high toxicity species were co-occurring. 
+
+Table 1. The LD50 for each *Monomorium* species based on the dose concentration that caused 50% mortality in *Argentine* ants
+
+![](Table 1.png)
+
+### *Monomorium* Survival against *Argentine* Correlation with LD50
+To determine trends in *Monomorium* survival against *Argentine* ants during arena fights, a generalised linear model (GLM) was used to compare status (dead/alive) based on species. It was determined that mortality was significantly correlated with species (p < 0.005). Furthermore, a custom function was used to determine the chance of surviving past each timepoint (1hr, 4hr, 24hr) for each species while considering the decreasing overall population after each timepoint. These survival rates were plotted against the four timepoints for each species (Figure 2).
+
+### *Argentine* Survival against *Monomorium* species Correlation with LD50
+To determine trends in *Argentine* survival against each *Monomorium* species during Arena fights, a GLM was used to compare status (dead/alive) based on species.  It was determined that mortality was significantly correlated with species (p < 0.005). Furthermore, a custom function was used to determine the change of surviving past each timepoint (1hr, 4hr, 24hr) for each species. These survival rates were plotted against the four timepoints for each species (Figure 2).
+
+### A)
+
+![](Figure 2A.png)
+
+### B)
+
+![](Figure 2B.png)
+
+Figure 2. Overall percent survival of *Monomorium* workers in arena fights against *Argentine* ants (A). Overall percent survival of *Argentine* ant workers in arena fights against four *Monomorium* species (B). 
+
+Based on these data, non co-occurring *M. antarcticum* has low mortality in arena fights and causes high mortality to *Argentine* ants. This allows us to theorise that this species could be excluding *Argentine* ants from their environments. Non co-occurring *M. smithii* has high mortality in arena fights and causes high mortality suggesting that these *Argentine* ants and *M. smithii* are being mutually excluded from each other's habitats. Finally *M. sydneyense* and *M. antipodum* could be co-existing with *Argentine* colonies due to their high venom toxicity causing equilibrium between the groups.
+
+## Hypothesis #2
+### Venom usage and *Argentine* ant density using Pearson's Chi-squared test 
+The second hypothesis was that the survival chances of the *Monomorium* species interacting with the *Argentine* ants would vary depending on venom utilization (none, gast, sting). All four of the *Monomorium* species presented significant variability in venom usage with respect to the *Argentine* ant density following *M. sydneyense* (N=424  X2 =54.35 df=6; p=6.23e-10),  *M. antipodum*(N=463  X2 =39.52 df=6; p=5.67e-07), M. antarticum (N=444  X2 =44.02 df=6; p=7.33e-08) and *M. smithii* (N=474  X2 =36.81 df=6; p=1.92e-06). An example of the venom usage distribution of *M. smithii* (co-occurs) depending on different *Argentine* ant densities may be seen in Table 2 (see Supplementary Material). The co-occurring species of *M. antipodum* saw an increase in the number of gaster/spraying with increasing *Argentine* ant densities while the non-occurring species of *M. smithii* and *M. antarcticum* shifted to a high number of stinging from not using venom prior with increasing *Argentine* ant density (see Supplementary Material).
+
+![](Table 2.png)
+
+All four *Monomorium* species shifted to aggressive interactions using venom to support their survival chances when the *Monomorium* species encountered increasing *Argentine* ant density. Venom may be used in different circumstances based on a cost-benefit approach that considers the metabolic cost of venom production with the cost benefit of venom utilization (Westermann et al., 2015). For instance, the co-occurring M. antipodium favoured to spray its venom onto the *Argentine* ants while the non-occurring species of *M. smithii* and *M. antarcticum* preferred venom usage by sting. Although venom usage varies between *Monomorium* species, stinging or gasting may be advantageous in their mechanism of action. Direct injection of venom into an enemy by stinging allows the user to bypass the opponent’s hard outer exoskeleton without the concern of missing the target while spraying venom provides less risk of injury to the user if successful. The survival chances of all four of the  *Monomorium* species significantly vary (p <0.01) in their venom usage depending on the number of *Argentine* ants encountered.
+
+## Hypothesis 3
+### *Monomorium* Ant Survival
+In order to assess the impacts of *Argentine* ant density and *Monomorium* species on *Monomorium* ant survival, a GLM with a boolean error distribution was conducted. From this analysis, significant correlations were found for *M. antarcticum* (GLM, p=2e-16),  *M. smithii* (generalised linear model, p=6.82e-08), *M. antipodum* (GLM, p=4.76e-04), and *M. sydneyense* (GLM, p=3.60e-10). Therefore, the species of *Monomorium* ant present within the arena significantly alters the probability of ant survival. From observing the generated figure (Figure 3) we are able to see that *Monomorium* ant mortality is highest in the *M. smithii* species and lowest in the *M. antarcticum* species. Furthermore, we are able to see significant correlation between ant survival and *Argentine* ant density (generalised linear model, p=5.99e-11). Additionally, we found significant interactions between *Monomorium* species and *Argentine* ant density for all species excluding *M. antipodum* and *M. sydneyense*, which is evident in figure 3 by a noticeable dip in ant mortality at a density of 80 *Argentine* ants. 
+
+![](Figure 3.png)
+
+Figure 3. The relationship between four different *Monomorium* ant species and *Argentine* ant density on *Monomorium* ant survival. Ants were subject to arena fights where 12 *Monomorium* ants were placed with different densities of *Argentine* ants. Behaviours and mortality of all four species were observed over a period of time. 
+
+## Hypothesis #4
+### *Argentine* Ant Survival
+Similar to the analysis conducted on the impacts of *Argentine* ant density and *Monomorium* species on *Monomorium* ant survival. A GLM with a boolean error distribution was also used to assess the impacts these two variables have on *Argentine* ant survival. Significant correlations were found in all species excluding *M. smithii* indicating that we are not able to predict *Argentine* ant mortality through the interactions between these two species. Moreover, significant interactions between *Argentine* ant density and *Monomorium* species were observed in all cases except for M. sydneysense, which can be observed in figure 4 where we see fluctuations in *Argentine* mortality across the various ant densities. 
+
+![](Figure 4.png)
+
+Figure 4. The relationship between four different *Monomorium* ant species and *Argentine* ant density on *Argentine* ant survival. Ants were subject to arena fights where 12 *Monomorium* ants were placed with different densities of *Argentine* ants. Behaviours and mortality of *Argentine* ants were observed over a period of time. 
+
+# Conclusions
+The goal of this research was to determine the mechanisms which causes some *Monomorium* species to co-occur with *Argentine* ants while other species do not co-occur. It was determined that species with higher venom toxicity are less likely to cause mortality to *Argentine* ants but some species with high venom toxicity would be more likely to survive *Argentine* arena fights. This could suggest that some species can exclude *Argentine* ants from an area causing an absence of co-occurrence. Furthermore, it was determined that venom usage significantly depends on the *Argentine* ant density which could contribute to the effects of venom use. Based on this evidence, certain *Monomorium* ant species are better equipped to defend themselves against the invasive *Argentine* species which could contribute to the presence or absence of co-occurrence. 
+
+# References
+Buczkowski, G., & Wossler, T. C. (2019, 2019/12/20). Controlling invasive *Argentine* ants, Linepithema humile, in conservation areas using horizontal insecticide transfer. Scientific Reports, 9(1), 19495. https://doi.org/10.1038/s41598-019-56189-1
+ 
+Giraud, T., Pedersen, J. S., & Keller, L. (2002). Evolution of supercolonies: The *Argentine* ants of southern Europe. Proceedings of the National Academy of Sciences, 99(9), 6075-6079. https://doi.org/doi:10.1073/pnas.092694199
+ 
+Jones, T. H., Andersen, A. N., & Kenny, J. C. (2009, Jul). Venom alkaloid chemistry of Australian species of the *Monomorium* rothsteini complex, with particular reference to taxonomic implications. Chem Biodivers, 6(7), 1034-1041. https://doi.org/10.1002/cbdv.200900005
+ 
+Roura-Pascual, N., Hui, C., Ikeda, T., Leday, G., Richardson, D. M., Carpintero, S., Espadaler, X., Gómez, C., Guénard, B., Hartley, S., Krushelnycky, P., Lester, P. J., McGeoch, M. A., Menke, S. B., Pedersen, J. S., Pitt, J. P. W., Reyes, J., Sanders, N. J., Suarez, A. V., Touyama, Y., Ward, D., Ward, P. S., & Worner, S. P. (2011). Relative roles of climatic suitability and anthropogenic influence in determining the pattern of spread in a global invader. Proceedings of the National Academy of Sciences, 108(1), 220-225. https://doi.org/doi:10.1073/pnas.1011723108
+ 
+Westermann, F. L., McPherson, I. S., Jones, T. H., Milicich, L., & Lester, P. J. (2015). Toxicity and utilization of chemical weapons: does toxicity and venom utilization contribute to the formation of species communities? Ecology and Evolution, 5(15), 3103-3113. https://doi.org/https://doi.org/10.1002/ece3.1595
+
+# Supplementary Materials 
+![](Table 3.png)
+
