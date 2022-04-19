@@ -137,10 +137,10 @@ names(Smithii_Observed_Data)<-c("None","Gast","Sting")
 #----------------------------------------------------
 Argentine_ant_density<-c(20,40,80,160) # Argentine ant density to perform an independent chi-test 
 
-chisq.test(Sydneyense_Observed_Data,Antarcticum_Mortality)
-chisq.test(Antipodum_Observed_Data,Antarcticum_Mortality)
-chisq.test(Antarcticum_Observed_Data,Antarcticum_Mortality)
-chisq.test(Smithii_Observed_Data,Antarcticum_Mortality)
+chisq.test(Sydneyense_Observed_Data,Argentine_ant_density)
+chisq.test(Antipodum_Observed_Data,Argentine_ant_density)
+chisq.test(Antarcticum_Observed_Data,Argentine_ant_density)
+chisq.test(Smithii_Observed_Data,Argentine_ant_density)
 #----------------------------------------------------
 
 
