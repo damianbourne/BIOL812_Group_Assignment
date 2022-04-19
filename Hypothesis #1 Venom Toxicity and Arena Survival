@@ -1,7 +1,7 @@
 ######################################################################################
 ########---Hypothesis #1: Part 1: Determine LD50 from Venom survivability---##########
 
-########Python Script########
+#Load Python Script-----------------------------------------------------------
 
 import os
 import pandas as pd
@@ -60,9 +60,24 @@ print('intercept:', model_syd.intercept_)
 print('slope:', model_syd.coef_)
 LD50_syd=-2.2536369351207703+20.77204067*(0.5)
 
+#Load R Scipt-----------------------------------------------------------------
+
+VenSur<-read.csv("./Venom survivability.csv")
+library(ggplot2)
+head(VenSur)
+
+#LM to determine if the survival is difference between species 
+VenDat<-data.frame(Dose=VenSur$Venom.concentration..ug.ul., 
+                   Species=VenSur$Species, PerDead=VenSur$X.killed4hr/VenSur$X..Treated)
+
+VenMod<-lm(PerDead ~ Species + Dose, data=VenDat) #multifactor ANOVA 
+anova(VenMod)
+summary(VenMod)
 
 ##############################################################################
 ########---Hypothesis #1: Part 2: Monomorium Survival Arena Fight---##########
+
+#Load R Script ----------------------------------------------------------------
 
 Arena<-read.csv("Arena fight and venom usage Monomorium Survival.csv")
 head(Arena)
@@ -128,6 +143,9 @@ ggplot(data=df_Mon, aes(x=TimePoints, y=Percent_Survival_Mon, colour=Species))+
 
 ##############################################################################
 ########---Hypothesis #1: Part 3: Argentine Survival Arena Fight---##########
+
+#Load R Script ---------------------------------------------------------------
+
 ArgSurvival<-read.csv("Arena fight and venom usage Argentine ant Survival.csv")
 head(ArgSurvival)
 
