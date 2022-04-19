@@ -1,0 +1,186 @@
+######################################################################################
+########---Hypothesis #1: Part 1: Determine LD50 from Venom survivability---##########
+
+########Python Script########
+
+import os
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv (r'Venom survivability.csv') #creat data frame
+
+#Subset Data by Species
+#------------------------------------------------------------------------------
+Mantar=df[0:26] 
+Msmi=df[28:43]
+Mantip=df[43:79]
+Msyd=df[79:109]
+#------------------------------------------------------------------------------
+
+#Create reshaped numpy array from percent dead from each species subset  
+#------------------------------------------------------------------------------
+PerDead_antar=np.array(Mantar["#killed4hr"]/Mantar["# Treated"]).reshape((-1,1))
+PerDead_smi=np.array(Msmi["#killed4hr"]/Msmi["# Treated"]).reshape((-1,1))
+PerDead_antip=np.array(Mantip["#killed4hr"]/Mantip["# Treated"]).reshape((-1,1))
+PerDead_syd=np.array(Msyd["#killed4hr"]/Msyd["# Treated"]).reshape((-1,1))
+#------------------------------------------------------------------------------
+
+#Create numpy array from venome concentration for each species subset 
+#------------------------------------------------------------------------------
+Dose_antar=np.array(Mantar["Venom concentration [ug/ul]"])
+Dose_smi=np.array(Msmi["Venom concentration [ug/ul]"])
+Dose_antip=np.array(Mantip["Venom concentration [ug/ul]"])
+Dose_syd=np.array(Msyd["Venom concentration [ug/ul]"])
+#------------------------------------------------------------------------------
+
+
+from sklearn.linear_model import LinearRegression
+#Linear regressin to obtain slope and inercept of regression line 
+#Using regression line equation and PerDead_Species=0.5 to determine the dose concentration when 50% mortality is seen 
+#------------------------------------------------------------------------------
+model_antar = LinearRegression().fit(PerDead_antar, Dose_antar)
+print('intercept:', model_antar.intercept_)
+print('slope:', model_antar.coef_)
+LD50_antar=1.0105327639591284+18.63614229*(0.5)
+
+model_smi = LinearRegression().fit(PerDead_smi, Dose_smi)
+print('intercept:', model_smi.intercept_)
+print('slope:', model_smi.coef_)
+LD50_smi=1.3879662343771209+14.6352995*(0.5)
+
+
+model_antip = LinearRegression().fit(PerDead_antip, Dose_antip)
+print('intercept:', model_antip.intercept_)
+print('slope:', model_antip.coef_)
+LD50_antip=-0.2957758589731192+17.15971948*(0.5)
+
+
+model_syd = LinearRegression().fit(PerDead_syd, Dose_syd)
+print('intercept:', model_syd.intercept_)
+print('slope:', model_syd.coef_)
+LD50_syd=-2.2536369351207703+20.77204067*(0.5)
+
+
+##############################################################################
+########---Hypothesis #1: Part 2: Monomorium Survival Arena Fight---##########
+
+Arena<-read.csv("Arena fight and venom usage Monomorium Survival.csv")
+head(Arena)
+
+#To determine if differences in survival in Arena fight is statistically significant using generalized linear model on binomial data 
+#-------------------------------------------------------------------------------
+GLM_Mon<-glm(Arena$Status..Alive.Dead. ~ Arena$Species, family=binomial)
+summary(GLM_Mon)
+#-------------------------------------------------------------------------------
+
+#Subset by species 
+#-------------------------------------------------------------------------------
+Sur_antar<-filter(Arena, Species=="M_antarcticum")
+Sur_smi<-filter(Arena, Species=="M_smithii")
+Sur_antip<-filter(Arena, Species=="M_antipodum")
+Sur_syd<-filter(Arena, Species=="M_sydneyense")
+#-------------------------------------------------------------------------------
+
+#Custom function to determine probability of surviving past each timepoint considering the effect of the decreasing overall population across tiempoints
+#Will output three probability corresponding with each timepoint 
+#-------------------------------------------------------------------------------
+Survival_Function_Mon<-function(Total=0, Sur_species=0){
+  NumDead1HR<-length(grep(1, Sur_species$Survival.Time, value=TRUE)) # Number after at timepoint 
+  Chance_Surviving_1HR<-(Total-NumDead1HR)/Total #Chance of surviving timepoint 
+  NumDead4HR<-length(grep("^4$", Sur_species$Survival.Time, value=TRUE, fixed=TRUE)) #using "^4$" to find exact match so I dont select for the '4' in '24' 
+  Chance_Surviving_4HR<-Chance_Surviving_1HR*(Total-NumDead1HR - NumDead4HR)/(Total-NumDead1HR)
+  NumDead24HR<-length(filter(Sur_species, Survival.Time==24, Status..Alive.Dead.==1))
+  Chance_Surviving_24HR<-Chance_Surviving_4HR*(Total-NumDead1HR-NumDead4HR-NumDead24HR)/(Total-NumDead1HR-NumDead4HR) #chance of surviving timpoint taking into account status (dead/alive) at the end of timepoint
+  output<-c(Chance_Surviving_1HR, Chance_Surviving_4HR, Chance_Surviving_24HR)
+  return(output)
+}
+#-------------------------------------------------------------------------------
+
+#Calculating Percent Survival for each species
+#-------------------------------------------------------------------------------
+PerSurv_antar<-(Survival_Function_Mon(Total=348, Sur_species=Sur_antar))*100
+PerSurv_smi<-(Survival_Function_Mon(Total=348, Sur_species=Sur_smi))*100
+PerSurv_antip<-(Survival_Function_Mon(Total=360, Sur_species=Sur_antip))*100
+PerSurv_syd<-(Survival_Function_Mon(Total=348, Sur_species=Sur_syd))*100
+
+TimePoints<-c(1,4,24) #X axis variable 
+#-------------------------------------------------------------------------------
+
+#Visualization 
+#-------------------------------------------------------------------------------
+library(ggplot2)
+source("http://bit.ly/theme_pub")
+
+#creating data frame with timepoints, species, and percent survival 
+df_Mon<-data.frame(TimePoints=rep(c(1,4,24), 4), 
+               Species=rep(c("M_antarcticum", "M_antipodum", "M_smithii", "M_sydneyense"), each =3),
+               Percent_Survival_Mon=c(PerSurv_antar, PerSurv_antip, PerSurv_syd, PerSurv_smi)) 
+
+ggplot(data=df_Mon, aes(x=TimePoints, y=Percent_Survival_Mon, colour=Species))+
+  geom_line(size=1)+
+  geom_point()+
+  theme_classic() +
+  ylab("Percent Survival (%)") + xlab("Survival of Monomorium Ants in Arena Fight (hr)")+
+  scale_color_manual(values=c("M_antarcticum"="#910a29","M_antipodum"="#f1ab1f", "M_smithii"="#1764b3", "M_sydneyense" = "black"))
+                    
+#-------------------------------------------------------------------------------
+
+
+##############################################################################
+########---Hypothesis #1: Part 3: Argentine Survival Arena Fight---##########
+ArgSurvival<-read.csv("Arena fight and venom usage Argentine ant Survival.csv")
+head(ArgSurvival)
+
+#To determine if differences in survival in Arena fight is statistically significant using generalized linear model on binomial data 
+#-------------------------------------------------------------------------------
+GLM_Arg<-glm(ArgSurvival$Status..Alive.Dead. ~ ArgSurvival$Species, family=binomial)
+summary(GLM_Arg)
+#-------------------------------------------------------------------------------
+
+#Subset by Species 
+#-------------------------------------------------------------------------------
+SurArg_antar<-filter(ArgSurvival, Species=="M_antarcticum")
+SurArg_smi<-filter(ArgSurvival, Species=="M_smithii")
+SurArg_antip<-filter(ArgSurvival, Species=="M_antipodum")
+SurArg_syd<-filter(ArgSurvival, Species=="M_sydneyense")
+#-------------------------------------------------------------------------------
+
+#Custom function to determine probability of surviving past each timepoint considering the effect of the decreasing overall population across tiempoints
+#Will output three probability corresponding with each timepoint 
+#-------------------------------------------------------------------------------
+Survival_Arg_Function<-function(Total=0, Sur_species=Sur_antar){
+  NumDead1HR<-length(grep(1, Sur_species$Survival.Time, value=TRUE))
+  Chance_Surviving_1HR<-(Total-NumDead1HR)/Total
+  NumDead4HR<-length(grep("^4$", Sur_species$Survival.Time, value=TRUE, fixed=TRUE)) #using "^4$" to find exact match so I dont select for the '4' in '24'
+  Chance_Surviving_4HR<-Chance_Surviving_1HR*(Total-NumDead1HR - NumDead4HR)/(Total-NumDead1HR)
+  NumDead24HR<-length(filter(Sur_species, Survival.Time=="24", Status..Alive.Dead.=="1"))
+  Chance_Surviving_24HR<-Chance_Surviving_4HR*(Total-NumDead1HR-NumDead4HR-NumDead24HR)/(Total-NumDead1HR-NumDead4HR)
+  output<-c(Chance_Surviving_1HR, Chance_Surviving_4HR, Chance_Surviving_24HR)
+  return(output)
+}
+#-------------------------------------------------------------------------------
+
+#Calculating Percent Survival for each species
+#-------------------------------------------------------------------------------
+ArgTime_antar<-(Survival_Arg_Function(Total=2000, Sur_species=SurArg_antar))*100
+ArgTime_smi<-(Survival_Arg_Function(Total=2000, Sur_species=SurArg_smi))*100
+ArgTime_antip<-(Survival_Arg_Function(Total=2040, Sur_species=SurArg_antip))*100
+ArgTime_syd<-(Survival_Arg_Function(Total=2000, Sur_species=SurArg_syd))*100
+#-------------------------------------------------------------------------------
+
+#Visualization
+#-------------------------------------------------------------------------------
+library(ggplot2)
+source("http://bit.ly/theme_pub")
+
+df_Arg<-data.frame(TimePoints=rep(c(1,4,24), 4), 
+                   Species=rep(c("M_antarcticum", "M_antipodum", "M_smithii", "M_sydneyense"), each =3),
+                   Percent_Survival_Arg=c(ArgTime_antar, ArgTime_antip, ArgTime_smi, ArgTime_syd)) 
+
+ggplot(data=df_Arg, aes(x=TimePoints, y=Percent_Survival_Arg, colour=Species))+
+  geom_line(size=1)+
+  geom_point()+
+  theme_classic() +
+  ylab("Percent Survival (%)") + xlab("Survival of Argentine Ants in Arena Fight (hr)")+
+  scale_color_manual(values=c("M_antipodum"="#f1ab1f","M_sydneyense" = "black", "M_antarcticum"="#910a29","M_smithii"="#1764b3"))
+
